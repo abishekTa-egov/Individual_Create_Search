@@ -53,12 +53,12 @@ public class Individual   {
         @JsonProperty("dateOfBirth")
 
           @Valid
-                private LocalDate dateOfBirth = null;
+                private String dateOfBirth = null;
 
         @JsonProperty("gender")
 
           @Valid
-                private Gender gender = null;
+                private String gender = null;
 
         @JsonProperty("bloodGroup")
 
