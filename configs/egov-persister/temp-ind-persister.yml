@@ -1,0 +1,43 @@
+serviceMaps:
+  serviceName: ind-services
+  mappings:
+    - version: 1.0
+      description: Persists ind details in tables
+      fromTopic: save-ind-application
+      isTransaction: true
+      queryMaps:
+        - query: |
+            INSERT INTO eg_ind_registration(
+              id, individualId, tenantId, clientReferenceId, givenName, familyName, otherNames,
+              dateOfBirth, gender, bloodGroup, mobileNumber, altContactNumber, email,
+              fatherName, husbandName, relationship, photo, additionalFields, rowVersion,
+              createdBy, lastModifiedBy, createdTime, lastModifiedTime
+            ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);
+          basePath: Individual
+          jsonMaps:
+            - jsonPath: $.Individual.id
+            - jsonPath: $.Individual.individualId
+            - jsonPath: $.Individual.tenantId
+            - jsonPath: $.Individual.clientReferenceId
+            - jsonPath: $.Individual.name.givenName
+            - jsonPath: $.Individual.name.familyName
+            - jsonPath: $.Individual.name.otherNames
+            - jsonPath: $.Individual.dateOfBirth
+            - jsonPath: $.Individual.gender
+            - jsonPath: $.Individual.bloodGroup
+            - jsonPath: $.Individual.mobileNumber
+            - jsonPath: $.Individual.altContactNumber
+            - jsonPath: $.Individual.email
+            - jsonPath: $.Individual.fatherName
+            - jsonPath: $.Individual.husbandName
+            - jsonPath: $.Individual.relationship
+            - jsonPath: $.Individual.photo
+            - jsonPath: $.Individual.additionalFields
+            - jsonPath: $.Individual.rowVersion
+            - jsonPath: $.Individual.AuditDetails.createdBy
+            - jsonPath: $.Individual.AuditDetails.lastModifiedBy
+            - jsonPath: $.Individual.AuditDetails.createdTime
+            - jsonPath: $.Individual.AuditDetails.lastModifiedTime
+
+
+
