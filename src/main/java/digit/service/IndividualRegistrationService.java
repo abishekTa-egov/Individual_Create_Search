@@ -8,7 +8,6 @@ import digit.repository.ServiceRequestRepository;
 import digit.web.models.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.workflow.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -65,6 +64,38 @@ public class IndividualRegistrationService {
         // Return the response back to user
         return body.getIndividual();
     }
+
+    public List<Individual> searchBtApplications(RequestInfo requestInfo, IndividualSearch indSearchCriteria) {
+        // Fetch applications from database according to the given search criteria
+        List<Individual> applications = indRegistrationRepository.getApplications(birthApplicationSearchCriteria);
+
+        // If no applications are found matching the given criteria, return an empty list
+        if(CollectionUtils.isEmpty(applications))
+            return new ArrayList<>();
+
+        // Enrich mother and father of applicant objects
+        applications.forEach(application -> {
+            enrichmentUtil.enrichFatherApplicantOnSearch(application);
+            enrichmentUtil.enrichMotherApplicantOnSearch(application);
+            ProcessInstance obj=workflowService.getCurrWorkflow(requestInfo, application);
+
+            Workflow workflow = new Workflow();
+            workflow.setStatus(obj.getState().getState());
+            workflow.setComments(obj.getComment());
+            workflow.setDocuments(obj.getDocuments());
+            workflow.setAction(obj.getAction());
+
+            application.setWorkflow(workflow);
+        });
+
+
+
+        // Otherwise return the found applications
+        return applications;
+    }
+
+
+
 
 
 }
