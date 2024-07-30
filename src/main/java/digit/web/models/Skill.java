@@ -39,5 +39,5 @@ public class Skill   {
 
         @Size(min=2,max=64)         private String experience = null;
 
-
+        @Size(min=2,max=64)         private String individualId= null;
 }

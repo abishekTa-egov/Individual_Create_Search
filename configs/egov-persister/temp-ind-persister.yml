@@ -11,7 +11,7 @@ serviceMaps:
             dateOfBirth, gender, bloodGroup, mobileNumber, altContactNumber, email,
             fatherName, husbandName, relationship, photo, rowVersion,
             createdBy, lastModifiedBy, createdTime, lastModifiedTime
-            ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
           basePath: Individual
           jsonMaps:
             - jsonPath: $.Individual.id
@@ -37,32 +37,31 @@ serviceMaps:
             - jsonPath: $.Individual.auditDetails.createdTime
             - jsonPath: $.Individual.auditDetails.lastModifiedTime
 
-
-
-
-        - query: INSERT INTO eg_address(
-            id, tenantId, doorNo, latitude, longitude, locationAccuracy, type, addressLine1,
+        - query:  INSERT INTO eg_address(
+            id, individualId, tenantId, doorNo, latitude, longitude, locationAccuracy, type, addressLine1,
             addressLine2, landmark, city, pincode, buildingName, street, locality_code,
             locality_name, locality_label, locality_latitude, locality_longitude
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
-          basePath: Individual.address
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+          basePath: Individual.address.*
           jsonMaps:
-            - jsonPath: $.Individual.address[*].id
-            - jsonPath: $.Individual.address[*].tenantId
-            - jsonPath: $.Individual.address[*].doorNo
-            - jsonPath: $.Individual.address[*].latitude
-            - jsonPath: $.Individual.address[*].longitude
-            - jsonPath: $.Individual.address[*].locationAccuracy
-            - jsonPath: $.Individual.address[*].type
-            - jsonPath: $.Individual.address[*].addressLine1
-            - jsonPath: $.Individual.address[*].addressLine2
-            - jsonPath: $.Individual.address[*].landmark
-            - jsonPath: $.Individual.address[*].city
-            - jsonPath: $.Individual.address[*].pincode
-            - jsonPath: $.Individual.address[*].buildingName
-            - jsonPath: $.Individual.address[*].street
-            - jsonPath: $.Individual.address[*].locality.code
-            - jsonPath: $.Individual.address[*].locality.name
-            - jsonPath: $.Individual.address[*].locality.label
-            - jsonPath: $.Individual.address[*].locality.latitude
-            - jsonPath: $.Individual.address[*].locality.longitude
+            - jsonPath: $.Individual.address.*.id
+            - jsonPath: $.Individual.address.*.individualId
+            - jsonPath: $.Individual.address.*.tenantId
+            - jsonPath: $.Individual.address.*.doorNo
+            - jsonPath: $.Individual.address.*.latitude
+            - jsonPath: $.Individual.address.*.longitude
+            - jsonPath: $.Individual.address.*.locationAccuracy
+            - jsonPath: $.Individual.address.*.type
+            - jsonPath: $.Individual.address.*.addressLine1
+            - jsonPath: $.Individual.address.*.addressLine2
+            - jsonPath: $.Individual.address.*.landmark
+            - jsonPath: $.Individual.address.*.city
+            - jsonPath: $.Individual.address.*.pincode
+            - jsonPath: $.Individual.address.*.buildingName
+            - jsonPath: $.Individual.address.*.street
+            - jsonPath: $.Individual.address.*.locality.code
+            - jsonPath: $.Individual.address.*.locality.name
+            - jsonPath: $.Individual.address.*.locality.label
+            - jsonPath: $.Individual.address.*.locality.latitude
+            - jsonPath: $.Individual.address.*.locality.longitude
+

@@ -30,5 +30,7 @@ public class Identifier   {
 
         @Size(min=2,max=64)         private String identifierId = null;
 
+        @Size(min=2,max=64)         private String individualId = null;
+
 
 }

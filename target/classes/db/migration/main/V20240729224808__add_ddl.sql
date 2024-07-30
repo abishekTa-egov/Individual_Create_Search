@@ -1,5 +1,5 @@
 CREATE TABLE eg_address(
-  id VARCHAR(64) PRIMARY KEY,
+  id VARCHAR(64),
   individualId VARCHAR(64),
   tenantId VARCHAR(64) ,
   doorNo VARCHAR(64),

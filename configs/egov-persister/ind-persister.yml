@@ -65,3 +65,21 @@ serviceMaps:
             - jsonPath: $.Individual.address.*.locality.latitude
             - jsonPath: $.Individual.address.*.locality.longitude
 
+        - query: INSERT INTO eg_identifier (
+            individualId, identifierType, identifierId
+            ) VALUES (?,?,?);
+          basePath: Individual.identifiers.*
+          jsonMaps:
+            - jsonPath: $.Individual.identifiers.*.individualId
+            - jsonPath: $.Individual.identifiers.*.identifierType
+            - jsonPath: $.Individual.identifiers.*.identifierId
+
+        - query: INSERT INTO eg_skills (
+            individualId, skillType, skillLevel,experience
+            ) VALUES (?,?,?,?);
+          basePath: Individual.skills.*
+          jsonMaps:
+            - jsonPath: $.Individual.skills.*.individualId
+            - jsonPath: $.Individual.skills.*.type
+            - jsonPath: $.Individual.skills.*.level
+            - jsonPath: $.Individual.skills.*.experience

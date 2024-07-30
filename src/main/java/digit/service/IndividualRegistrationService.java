@@ -5,9 +5,7 @@ import digit.kafka.Producer;
 import digit.repository.ServiceRequestRepository;
 
 
-import digit.web.models.Address;
-import digit.web.models.Individual;
-import digit.web.models.IndividualRequest;
+import digit.web.models.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.common.contract.request.RequestInfo;
@@ -22,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import digit.web.models.AuditDetails;
-
 
 
 @Service
@@ -42,10 +38,21 @@ public class IndividualRegistrationService {
 //        System.out.println(body);
         String uuid=UUID.randomUUID().toString();
         body.getIndividual().setIndividualId(uuid);
+
         List<Address> addresses = body.getIndividual().getAddress();
         System.out.println("hi"+addresses);
         for (Address address : addresses){
             address.setIndividualId(uuid);
+        }
+
+        List<Identifier> identifiers=body.getIndividual().getIdentifiers();
+        for (Identifier identifier: identifiers){
+            identifier.setIndividualId(uuid);
+        }
+
+        List<Skill> skills=body.getIndividual().getSkills();
+        for(Skill skill: skills){
+            skill.setIndividualId(uuid);
         }
         System.out.println("bye"+addresses);
         System.out.println("bye1"+body.getIndividual());
