@@ -28,6 +28,8 @@ public class Address   {
 
         @Size(min=2,max=64)         private String id = null;
 
+        @Size(min=2,max=64)         private String individualId = null;
+
         @JsonProperty("tenantId")
 
         @Size(min=2,max=1000)         private String tenantId = null;

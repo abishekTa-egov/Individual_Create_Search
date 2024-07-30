@@ -6,13 +6,12 @@ serviceMaps:
       fromTopic: save-ind-application
       isTransaction: true
       queryMaps:
-        - query: |
-            INSERT INTO eg_ind_registration(
-              id, individualId, tenantId, clientReferenceId, givenName, familyName, otherNames,
-              dateOfBirth, gender, bloodGroup, mobileNumber, altContactNumber, email,
-              fatherName, husbandName, relationship, photo, additionalFields, rowVersion,
-              createdBy, lastModifiedBy, createdTime, lastModifiedTime
-            ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);
+        - query: INSERT INTO eg_ind_registration(
+            id, individualId, tenantId, clientReferenceId, givenName, familyName, otherNames,
+            dateOfBirth, gender, bloodGroup, mobileNumber, altContactNumber, email,
+            fatherName, husbandName, relationship, photo, rowVersion,
+            createdBy, lastModifiedBy, createdTime, lastModifiedTime
+            ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);
           basePath: Individual
           jsonMaps:
             - jsonPath: $.Individual.id
@@ -32,12 +31,38 @@ serviceMaps:
             - jsonPath: $.Individual.husbandName
             - jsonPath: $.Individual.relationship
             - jsonPath: $.Individual.photo
-            - jsonPath: $.Individual.additionalFields
             - jsonPath: $.Individual.rowVersion
-            - jsonPath: $.Individual.AuditDetails.createdBy
-            - jsonPath: $.Individual.AuditDetails.lastModifiedBy
-            - jsonPath: $.Individual.AuditDetails.createdTime
-            - jsonPath: $.Individual.AuditDetails.lastModifiedTime
+            - jsonPath: $.Individual.auditDetails.createdBy
+            - jsonPath: $.Individual.auditDetails.lastModifiedBy
+            - jsonPath: $.Individual.auditDetails.createdTime
+            - jsonPath: $.Individual.auditDetails.lastModifiedTime
 
 
 
+
+        - query: INSERT INTO eg_address(
+            id, tenantId, doorNo, latitude, longitude, locationAccuracy, type, addressLine1,
+            addressLine2, landmark, city, pincode, buildingName, street, locality_code,
+            locality_name, locality_label, locality_latitude, locality_longitude
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+          basePath: Individual.address
+          jsonMaps:
+            - jsonPath: $.Individual.address[*].id
+            - jsonPath: $.Individual.address[*].tenantId
+            - jsonPath: $.Individual.address[*].doorNo
+            - jsonPath: $.Individual.address[*].latitude
+            - jsonPath: $.Individual.address[*].longitude
+            - jsonPath: $.Individual.address[*].locationAccuracy
+            - jsonPath: $.Individual.address[*].type
+            - jsonPath: $.Individual.address[*].addressLine1
+            - jsonPath: $.Individual.address[*].addressLine2
+            - jsonPath: $.Individual.address[*].landmark
+            - jsonPath: $.Individual.address[*].city
+            - jsonPath: $.Individual.address[*].pincode
+            - jsonPath: $.Individual.address[*].buildingName
+            - jsonPath: $.Individual.address[*].street
+            - jsonPath: $.Individual.address[*].locality.code
+            - jsonPath: $.Individual.address[*].locality.name
+            - jsonPath: $.Individual.address[*].locality.label
+            - jsonPath: $.Individual.address[*].locality.latitude
+            - jsonPath: $.Individual.address[*].locality.longitude
