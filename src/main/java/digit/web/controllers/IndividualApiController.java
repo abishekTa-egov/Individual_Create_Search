@@ -4,6 +4,7 @@ package digit.web.controllers;
 import digit.service.IndividualRegistrationService;
 import digit.util.ResponseInfoFactory;
 import digit.web.models.*;
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -89,8 +90,9 @@ import java.util.*;
 //                            return new ResponseEntity<IndividualBulkSearchResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
 //                        }
 //                    }
-
-                    return new ResponseEntity<IndividualBulkSearchResponse>(HttpStatus.NOT_IMPLEMENTED);
+                    ResponseInfo responseInfo = responseInfoFactory.createResponseInfoFromRequestInfo(body.getRequestInfo(), true);
+                    IndividualBulkSearchResponse response = IndividualBulkSearchResponse.builder().individuals(individuals).responseInfo(responseInfo).build();
+                    return new ResponseEntity<IndividualBulkSearchResponse>(response, HttpStatus.OK);
                 }
 
                 @RequestMapping(value="/individual/v1/bulk/_create", method = RequestMethod.POST)

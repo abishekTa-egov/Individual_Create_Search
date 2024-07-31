@@ -10,32 +10,47 @@ import java.util.List;
 @Component
 public class IndApplicationQueryBuilder {
 
-    private static final String BASE_IND_QUERY = " SELECT ind.id as indId, ind.tenantId as indTenantId, ind.applicationNumber as indapplicationnumber, btr.babyfirstname as bbabyfirstname, btr.babylastname as bbabylastname, btr.fatherid as bfatherid, btr.motherid as bmotherid, btr.doctorname as bdoctorname, btr.hospitalname as bhospitalname, btr.placeofbirth as bplaceofbirth, btr.timeofbirth as btimeofbirth, btr.createdby as bcreatedby, btr.lastmodifiedby as blastmodifiedby, btr.createdtime as bcreatedtime, btr.lastmodifiedtime as blastmodifiedtime, ";
+    private static final String BASE_IND_QUERY = " SELECT ind.id as indId, ind.individualId as individualId, ind.tenantId as tenantId, ind.clientReferenceId as clientReferenceId, ind.user_id as userId, ind.givenName as givenName, ind.familyName as familyName, ind.otherNames as otherNames, ind.dateOfBirth as dateOfBirth, ind.gender as gender, ind.bloodGroup as bloodGroup, ind.mobileNumber as mobileNumber, ind.altContactNumber as altContactNumber, ind.email as email, ind.fatherName as fatherName, ind.husbandName as husbandName, ind.relationship as relationship, ind.photo as photo, ind.additionalFields as additionalFields, ind.is_deleted as isDeleted, ind.is_SystemUser as isSystemUser, ind.rowVersion as rowVersion, ind.createdBy as createdBy, ind.lastModifiedBy as lastModifiedBy, ind.createdTime as createdTime, ind.lastModifiedTime as lastModifiedTime, ";
 
-    private static final String ADDRESS_SELECT_QUERY = " add.id as aid, add.tenantid as atenantid, add.type as atype, add.address as aaddress, add.city as acity, add.pincode as apincode, add.registrationid as aregistrationid ";
+    private static final String ADDRESS_SELECT_QUERY = " add.id as addressId,add.tenantId as addressTenantId, add.doorNo as doorNo, add.latitude as latitude, add.longitude as longitude, add.locationAccuracy as locationAccuracy, add.type as addressType, add.addressLine1 as addressLine1, add.addressLine2 as addressLine2, add.landmark as landmark, add.city as city, add.pincode as pincode, add.buildingName as buildingName, add.street as street, add.locality_code as lcode, add.locality_name as lname, add.locality_label as llabel,add.locality_latitude as llatitude,add.locality_longitude as llongitude ";
 
-    private static final String FROM_TABLES = " FROM eg_ind_registration ind LEFT JOIN eg_ind_address add ON ind.individualId = add.individualId  ";
+    private static final String FROM_TABLES = " FROM eg_ind_registration ind LEFT JOIN eg_address add ON ind.individualId = add.individualId ";
 
     private final String ORDERBY_CREATEDTIME = " ORDER BY ind.createdTime DESC ";
 
-    public String getBirthApplicationSearchQuery(IndividualSearch criteria, List<Object> preparedStmtList){
+    public String getIndividualSearchQuery(IndividualSearch criteria, List<Object> preparedStmtList){
         StringBuilder query = new StringBuilder(BASE_IND_QUERY);
         query.append(ADDRESS_SELECT_QUERY);
         query.append(FROM_TABLES);
 
-        // order birth registration applications based on their createdtime in latest first manner
+        // Add dynamic conditions based on search criteria
+//        if (!ObjectUtils.isEmpty(criteria.getTenantId())) {
+//            addClauseIfRequired(query, preparedStmtList);
+//            query.append(" ind.tenantId = ? ");
+//            preparedStmtList.add(criteria.getTenantId());
+//        }
+
+//        if (!ObjectUtils.isEmpty(criteria.getIndividualId())) {
+//            addClauseIfRequired(query, preparedStmtList);
+//            query.append(" ind.individualId = ? ");
+//            preparedStmtList.add(criteria.getIndividualId());
+//        }
+
+        // order by createdTime in descending order
         query.append(ORDERBY_CREATEDTIME);
 
         return query.toString();
     }
 
-    private void addClauseIfRequired(StringBuilder query, List<Object> preparedStmtList){
-        if(preparedStmtList.isEmpty()){
+    private void addClauseIfRequired(StringBuilder query, List<Object> preparedStmtList) {
+        if (preparedStmtList.isEmpty()) {
             query.append(" WHERE ");
-        }else{
+        } else {
             query.append(" AND ");
         }
     }
+
+
 
     private String createQuery(List<String> ids) {
         StringBuilder builder = new StringBuilder();

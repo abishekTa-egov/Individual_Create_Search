@@ -1,5 +1,6 @@
 package digit.web.models;
 
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -34,7 +35,10 @@ public class IndividualResponse   {
         @JsonProperty("Individual")
 
           @Valid
-                private Individual individual = null;
+        private List<Individual> individuals = null;
+
+        @Valid
+        private Individual individual=null;
 
 
 }
